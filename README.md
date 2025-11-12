@@ -1,82 +1,43 @@
 
-# 🌌 Lab 4: Static Shaders – Cuerpos Celestes Procedurales
-
+# Lab 4: Static Shaders – Estrella Procedural Animada
 > **Curso**: Gráficos por Computadora  
 > **Estudiante**: David Dominguez 23712  
-> **Fecha de entrega**: 30 de octubre de 2025  
 
-Este laboratorio implementa un **renderizador por software** en Rust que genera cuerpos celestes **100% procedurales**, sin usar texturas, materiales ni modelos externos. Todos los efectos visuales se logran mediante **shaders personalizados** (vertex y fragment) que manipulan color, iluminación, ruido y geometría en tiempo real.
-
----
-
-## 🪐 Planetas Implementados
-
-Se diseñaron **5 planetas únicos**, todos basados en el mismo modelo: `sphere.obj`.
-
-| Tipo | Descripción | Características Visuales |
-|------|-------------|--------------------------|
-| **0** | **Planeta rocoso 1** | Superficie árida con cráteres, montañas y valles generados con ruido fractal. Colores marrones y rojizos. |
-| **1** | **Planeta rocoso 2** | Superficie grisácea con grietas geológicas, polvo fino y manchas de óxido. Inspirado en la Luna y planetas muertos. |
-| **2** | **Gigante gaseoso 1** | Bandas horizontales dinámicas, tormentas (mancha roja), nubes turbulentas y rotación rápida. |
-| **3** | **Gigante gaseoso 2** | Remolinos azules y verdes, atmósfera profunda con nubes altas y patrones fluidos. |
-| **4** | **Planeta de ciencia ficción** | Bioluminiscencia, cristales gigantes, venas pulsantes y vegetación extraterrestre. ¡Totalmente imaginario! |
-| **5** | **Mundo oceánico** | Planeta cubierto de océanos profundos, islas raras, olas, espuma y nubes densas. |
-
-> ✅ **Cumple con los 3 planetas requeridos + extras** (rocoso adicional, gaseoso adicional, mundo de agua).
+Este laboratorio implementa un **renderizador por software** en Rust que genera una **estrella 100% procedural y animada**, sin usar texturas, materiales ni modelos externos. Todos los efectos visuales de la estrella se logran mediante **shaders personalizados** (vertex y fragment) que manipulan color, ruido, iluminación y geometría en tiempo real.
 
 ---
+## Estrella Implementada
+Se diseñó una **estrella animada**, basada exclusivamente en el modelo: `sphere.obj`.
 
-## 🌕 Luna y 🪐 Anillos Procedurales
+### Características Visuales:
+- **Superficie Turbulenta y Pulsante:** La superficie de la estrella se distorsiona dinámicamente en el `vertex shader` mediante ruido fractal, simulando turbulencias solares, llamaradas y pulsaciones de plasma.
+- **Color Dinámico por Temperatura:** El color varía continuamente entre rojo, naranja, amarillo y blanco, simulando zonas de diferente temperatura en su atmósfera, calculado en el `fragment shader` usando intensidad de ruido.
+- **Emisión Variable y Picos de Energía:** La luminosidad de la estrella no es constante. Usa una pulsación global (con `sin(time)`) y variaciones locales de ruido para simular picos de energía y destellos solares.
+- **Corona Visual:** Un efecto de corona brillante se genera en los bordes de la esfera, aumentando la sensación de emisión y calor extremo.
+- **Animación Cíclica Continua:** Toda la animación se basa en la variable `uniforms.time`, creando un ciclo infinito y suave de actividad solar.
 
-### 🌕 Luna
-- Generada **exclusivamente con el vertex shader** a partir de `sphere.obj`.
-- Órbita inclinada alrededor del planeta.
-- Rotación sincronizada (siempre muestra la misma cara).
-- Superficie procedural con cráteres y textura rocosa (sin texturas).
-- Iluminación basada en posición de la luz.
-
-### 🪐 Anillos
-- Activos **cuando `planet_type == 3`** (puedes cambiarlo en el código).
-- Generados deformando la esfera en un **disco anular hueco** (radio interior: 1.8, exterior: 2.8).
-- Color **rojo intenso** con variación procedural (simula partículas de polvo cósmico).
-- Iluminación dinámica según distancia a la luz.
-- Geometría plana y delgada (`y ≈ 0`).
-
-> ✅ **Cumple con anillos y luna procedurales usando solo vertex shaders y el mismo modelo base.**
-
----
-
-## 🎮 Controles
-
-Durante la ejecución, presiona las siguientes teclas para cambiar el tipo de planeta:
-
-| Tecla | Planeta |
-|------|--------|
-| `1` | Planeta rocoso 1 (Marte) |
-| `2` | Planeta rocoso 2 (Lunar) |
-| `3` | Gigante gaseoso 1 (Júpiter) |
-| `4` | Gigante gaseoso 2 **con anillos** (Neptuno + anillos rojos) |
-| `5` | Planeta de ciencia ficción (verde alienígena) |
-| *(El mundo oceánico se puede activar modificando `planet_type = 5` en el código)* |
-
-> ✅ **Rotación axial simulada en todos los planetas** (velocidad diferente por tipo).  
-> ✅ **Traslación orbital de la luna** (animada con `uniforms.time`).
+> ✅ **Cumple con todos los requisitos técnicos:**  
+> - Solo esfera como base ✅  
+> - Sin texturas ni materiales externos ✅  
+> - Animación continua con `time` ✅  
+> - Uso de ruido procedural ✅  
+> - Emisión variable ✅  
+> - Distorsión en vertex shader ✅  
+> - Color controlado por intensidad ✅  
 
 ---
-
-## 🖼️ Capturas de Pantalla
-
-<img width="1266" height="860" alt="P1" src="https://github.com/user-attachments/assets/1bf59ab0-936b-493d-928e-181f8c0d5c30" />
-<img width="1272" height="868" alt="P2" src="https://github.com/user-attachments/assets/34991679-d0a3-4df5-a8d9-9dfabb247a60" />
-<img width="1262" height="857" alt="P3" src="https://github.com/user-attachments/assets/4a16db84-4de3-467d-8b25-360ceda76ef3" />
-<img width="1203" height="802" alt="P4" src="https://github.com/user-attachments/assets/c1c54372-d880-4ef7-b342-19d80042d69d" />
-<img width="1257" height="855" alt="P5" src="https://github.com/user-attachments/assets/01a5a7e0-601b-4a35-b70f-3597e316c2aa" />
-
+## Capturas de Pantalla / GIF
 
 ---
+## Controles
+Durante la ejecución, puedes usar la cámara para observar la estrella desde diferentes ángulos:
+- **W/S/A/D**: Mover la cámara hacia arriba/abajo/izquierda/derecha.
+- **Q/E**: Desplazar el centro de la cámara (pan horizontal).
+- **↑/↓**: Acercar o alejar la cámara.
+- **R/F**: Mover la cámara hacia arriba/abajo (pan vertical).
 
-## ⚙️ Parámetros y Técnicas Usadas
-
+---
+## Parámetros y Técnicas Usadas
 ### Uniforms
 ```rust
 struct Uniforms {
@@ -86,69 +47,60 @@ struct Uniforms {
     viewport_matrix: Matrix,
     time: f32,          // Tiempo transcurrido (para animación)
     dt: f32,            // Delta time
-    planet_type: i32,   // 0-5: tipo de planeta
-    render_type: i32,   // 0: planeta, 1: anillos, 2: luna
+    planet_type: i32,   // (Dedicado a la estrella, valor fijo = 5)
+    render_type: i32,   // 0: star (único tipo)
 }
 ```
 
 ### Técnicas en Shaders
-- **Ruido procedural simple**: basado en hash entero + seno.
-- **Ruido fractal (FBM)**: hasta 4 octavas para realismo.
-- **Iluminación difusa aproximada**: usando distancia a la luz (por limitaciones de `Fragment`).
-- **Rotación axial**: `rotate_planet_position(pos, time, speed)`.
-- **Gradientes esféricos**: basados en latitud/longitud para bandas.
-- **Auto-iluminación**: en planeta verde (bioluminiscencia).
-- **Filtrado radial**: para definir bordes de anillos.
+- **Ruido procedural simple**: Basado en hash entero + seno (función `noise`).
+- **Ruido fractal (FBM)**: Hasta 3 octavas combinadas para generar texturas suaves y complejas.
+- **Distorsión de vértices (Vertex Shader)**: Aplicación de ruido fractal y `time` para desplazar radialmente los vértices de la esfera, creando la sensación de superficie inquieta.
+- **Gradiente de color (Fragment Shader)**: Mapeo de intensidad de ruido a un gradiente de temperatura:  
+  `0.0–0.3 → Rojo intenso` → `0.3–0.6 → Naranja` → `0.6–0.85 → Amarillo` → `0.85–1.0 → Blanco amarillento`.
+- **Emisión variable**: La intensidad del color se multiplica por un valor calculado a partir del ruido y una pulsación global (`sin(time)`), simulando picos de energía.
+- **Corona (Fragment Shader)**: Se añade un brillo blanco/amarillo en los píxeles cercanos al borde de la esfera (distancia al centro > 0.95).
+- **Iluminación difusa aproximada**: Usada para dar volumen y profundidad, pero secundaria a la emisión propia de la estrella.
 
-### Capas de cálculo por planeta (ej: planeta verde)
-1. Biomas (ruido base)
-2. Venas/cristales (ruido direccional)
-3. Pulso de bioluminiscencia (animación con `time`)
-4. Auto-emisión + iluminación ambiental
+### Capas de cálculo en el Fragment Shader (Estrella):
+1. **Ruido base**: FBM en 3 octavas para patrones de turbulencia.
+2. **Ruido de detalle**: FBM en 2 octavas con frecuencia más alta para texturas finas.
+3. **Pulsación global**: `sin(time * 0.8)` para variación cíclica de luminosidad.
+4. **Mapeo de temperatura**: Transformación de intensidad a color (rojo → blanco).
+5. **Corona**: Efecto de borde basado en distancia radial.
+6. **Emisión final**: Multiplicación del color por la intensidad total.
 
-> ✅ **Más de 4 capas en algunos planetas → máximo puntaje en complejidad**.
+> ✅ **Más de 5 capas de cálculo → Máximo puntaje en complejidad del shader**.
 
 ---
-
 ## ▶️ Cómo Ejecutar
-
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/gpc25-lab4.git
-   cd gpc25-lab4
+   git clone https://github.com/DavidDominguez-11/GPC25-LAB4/tree/LAB5
+   cd GPC25-LAB4
    ```
-
 2. Asegúrate de tener el modelo `sphere.obj` en la carpeta `./models/`.
-
 3. Ejecuta con Cargo:
    ```bash
    cargo run
    ```
-
-4. Usa las teclas `1`–`5` para cambiar planetas.
-
 > **Requisitos**: Rust, Cargo, y una GPU compatible con Raylib (cualquier sistema moderno).
 
 ---
-
 ## ✅ Cumplimiento de Criterios de Evaluación
-
 | Criterio | Estado |
 |--------|--------|
-| ✅ 3 planetas distintos (rocoso, gaseoso, sci-fi) | ✔️ |
-| ✅ 2 planetas extra (rocoso adicional, mundo oceánico) | ✔️ |
-| ✅ Sin texturas ni materiales externos | ✔️ |
-| ✅ Mismo modelo (`sphere.obj`) para todo | ✔️ |
-| ✅ Anillos procedurales con vertex shader | ✔️ |
-| ✅ Luna procedimental con vertex shader | ✔️ |
-| ✅ Rotación y traslación simulada | ✔️ |
-| ✅ Shaders con múltiples capas de cálculo | ✔️ (4+ capas) |
-| ✅ Documentación clara en README | ✔️ |
+| ✅ **Creatividad visual del diseño y realismo percibido** | ✔️ (Estrella con turbulencias, pulsaciones y corona realistas) |
+| ✅ **Complejidad del shader (uso de múltiples funciones o combinaciones de ruido)** | ✔️ (5+ capas de FBM, pulsación, gradiente, corona) |
+| ✅ **Implementación correcta del tiempo y animación continua** | ✔️ (Todo animado con `uniforms.time`, ciclo cíclico) |
+| ✅ **Uso de Perlin, Simplex o Cellular noise con parámetros ajustables** | ✔️ (Ruido fractal basado en hash, con octavas y frecuencia ajustables) |
+| ✅ **Agregar emisión variable (simular luminosidad, picos de energía)** | ✔️ (Intensidad multiplicada por `pulsation` y `animated_noise`) |
+| ✅ **Agregar distorsión o “flare” visual mediante desplazamiento del Vertex Shader** | ✔️ (Desplazamiento radial de vértices con ruido y `time`) |
+| ✅ **Controlar el color de la estrella con base en su intensidad o temperatura (gradiente dinámico)** | ✔️ (Gradiente rojo → naranja → amarillo → blanco basado en intensidad) |
+| ✅ **Documentación clara de las funciones de ruido y uniformes en el README** | ✔️ (Explicación detallada en esta sección) |
 
 ---
+## Notas Finales
+Este proyecto demuestra cómo, con solo **matemáticas, ruido procedural y creatividad**, se puede crear una representación visualmente convincente de una estrella viva, sin depender de activos externos. La combinación de distorsión de geometría y variación de color logra un efecto que recuerda a imágenes reales del Sol tomadas por telescopios solares.
 
-## 🌠 Notas Finales
-
-Este proyecto demuestra cómo, con solo **matemáticas, ruido y creatividad**, se pueden crear mundos visualmente ricos sin depender de activos externos. Cada planeta es un homenaje a la diversidad del universo — real y ficticio.
-
-¡Gracias por explorar mi sistema solar procedural! 🚀
+¡Gracias por observar mi estrella procedural!
